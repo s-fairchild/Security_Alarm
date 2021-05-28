@@ -8,16 +8,16 @@ from yaml import safe_load
 
 def parse_config(config_file):
     try:
-        print("Reading fand.yaml.")
+        print(f"Reading {config_file}.")
         with open(config_file, 'r') as file:
             config = safe_load(file)
-        print("Successfully read fand.yaml.")
+        print(f"Successfully read {config_file}.")
         if len(config) != 0:
             return config
         else:
             raise Exception("config file loaded with 0 length, somethings wrong.")
     except Exception as e:
-        print(f"Could not read fand.yaml, {e}")
+        print(f"Could not read {config_file}, {e}")
 
 if __name__ == "__main__":
     stop_event, val, config = Event(), False, parse_config('alarm.yaml')
