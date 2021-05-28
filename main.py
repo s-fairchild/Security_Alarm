@@ -23,8 +23,9 @@ if __name__ == "__main__":
     stop_event, val, config = Event(), False, parse_config('alarm.yaml')
     alarm = Alarm(Oled(height=config['oled']['height'], width=config['oled']['width']), 
             get_keypad(config['keypad']['matrix']), 
-            config['secret'])
-    door = DoorMonitor(alarm.disarm_alarm)
+            config['secret'], config['use_oled'])
+    door = DoorMonitor(config['use_oled'])
+    del(config) # config is not needed anymore
     th_doormon = Thread(target=door.monitor, args=[stop_event], daemon=True)
 
     while True:

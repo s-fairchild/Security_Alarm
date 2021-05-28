@@ -5,3 +5,4 @@ keypad :
 oled :
   height : 128
   width : 64
+use_oled : False

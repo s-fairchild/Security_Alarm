@@ -4,7 +4,7 @@ from time import sleep, strftime
 from threading import currentThread
 
 class DoorMonitor:
-    def __init__(self):
+    def __init__(self, use_oled=False):
         self.red = LED(17)
         self.green = LED(27)
         self.button = Button(18)
@@ -12,6 +12,7 @@ class DoorMonitor:
         self.buzzer = Buzzer(22)
         self.buzzer.off()
         self.count = 0
+        self.use_oled = use_oled
     
     def sound_alarm(self):
         self.buzzer.on()

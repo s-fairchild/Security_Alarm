@@ -1,11 +1,12 @@
 from time import sleep, strftime
 
 class Alarm:
-    def __init__(self, display, keypad, secret):
+    def __init__(self, display, keypad, secret, use_oled=False):
         self.display = display
         self.fails = 0
         self.keypad = keypad
         self.secret = secret
+        self.use_oled = use_oled
     
     def check_code(self, keys):
         passcode = ""
@@ -15,7 +16,8 @@ class Alarm:
         if self.secret == passcode:
             return True
         else:
-            self.display.display_text('INCORRECT PASSCODE ENTERED, TRY AGAIN.')
+            if self.use_oled:
+                self.display.display_text('INCORRECT PASSCODE ENTERED, TRY AGAIN.')
             sleep(2)
             self.fails += 1
             print(f"Incorrect passcode entered at {strftime('%m-%d-%Y %H:%M:%S')}")
@@ -31,7 +33,8 @@ class Alarm:
             sleep(0.1)
         keys.clear()
         while '*' not in keys:
-            self.display.self.display_text(f"Press * for enter\nPASSCODE: {len(keys) * '*'}")
+            if self.use_oled:
+                self.display.self.display_text(f"Press * for enter\nPASSCODE: {len(keys) * '*'}")
             keys = self.keypad.pressed_keys
             sleep(0.1)
         
@@ -39,7 +42,8 @@ class Alarm:
 
     def arm_alarm(self):
         keys = []
-        self.display.display_text("Press \"#\" key to arm alarm.")
+        if self.use_oled:
+            self.display.display_text("Press \"#\" key to arm alarm.")
         while '#' not in keys:
             keys = self.keypad.pressed_keys
             sleep(0.1)
