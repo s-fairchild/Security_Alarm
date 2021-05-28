@@ -1,0 +1,7 @@
+secret : "1234"
+keypad :
+# Valid options are 4x4 and 3x4
+  matrix : 3x4
+oled :
+  height : 128
+  width : 64
