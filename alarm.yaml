@@ -1,4 +1,5 @@
-secret : "1234"
+# sha256 hash
+secret : a883dafc480d466ee04e0d6da986bd78eb1fdd2178d04693723da3a8f95d42f4
 keypad :
 # Valid options are 4x4 and 3x4
   matrix : 3x4

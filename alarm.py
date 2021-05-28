@@ -1,4 +1,5 @@
 from time import sleep, strftime
+from os import popen
 
 class Alarm:
     def __init__(self, display, keypad, secret, use_oled=False):
@@ -8,12 +9,18 @@ class Alarm:
         self.secret = secret
         self.use_oled = use_oled
     
+    def make_hash(self, passcode):
+        cmd = f"echo \"{passcode}\" | sha256sum"
+        stream = popen(cmd)
+        output = stream.readline()
+        return output.replace(' ', '').replace('\n', '').replace('-', '')
+    
     def check_code(self, keys):
         passcode = ""
         for key in keys:
             passcode += str(key)
 
-        if self.secret == passcode:
+        if self.secret == self.make_hash(passcode):
             return True
         else:
             if self.use_oled:
