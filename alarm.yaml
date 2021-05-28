@@ -5,5 +5,5 @@ keypad :
   matrix : 3x4
 oled :
   height : 128
-  width : 64
+  width : 32
 use_oled : False
