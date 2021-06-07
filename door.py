@@ -1,7 +1,7 @@
 from gpiozero import LED, Button, Buzzer
 from signal import pause
 from time import sleep, strftime
-from threading import currentThread
+from db import Sqlite3Db
 
 class DoorMonitor:
     def __init__(self, use_oled=False):
@@ -13,16 +13,19 @@ class DoorMonitor:
         self.buzzer.off()
         self.count = 0
         self.use_oled = use_oled
+        self.db = Sqlite3Db()
     
     def sound_alarm(self):
         self.buzzer.on()
         print(f"Alarm started at {strftime('%m-%d-%Y %H:%M:%S')}")
+        self.db.save_start_time()
         while True:
             self.red.toggle()
             sleep(0.1)
         self.buzzer.off()
         self.red.off()
         print(f"Alarm ended at {strftime('%m-%d-%Y %H:%M:%S')}")
+        self.db.save_end_time()
 
     def monitor(self, stop_event):
         try:
